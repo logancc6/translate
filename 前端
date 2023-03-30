@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>网页翻译程序</title>
+</head>
+<body>
+	<h1>网页翻译程序</h1>
+	<label>请输入要翻译的文本：</label>
+	<input type="text" id="inputText" size="50" />
+	<br/><br/>
+	<button onclick="translateText()">翻译</button>
+	<br/><br/>
+	<label>翻译结果：</label>
+	<div id="outputText"></div>
+	
+	<script>
+		function translateText() {
+			var inputText = document.getElementById("inputText").value;
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					document.getElementById("outputText").innerHTML = this.responseText;
+				}
+			};
+			xhr.open("POST", "backend.php", true);
+			xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xhr.send("inputText=" + inputText);
+		}
+	</script>
+</body>
+</html>
